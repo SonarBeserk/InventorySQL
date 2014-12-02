@@ -48,24 +48,32 @@ public final class InventorySQLPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        pluginManager = getPluginManager();
+        pluginManager = getServer().getPluginManager();
 
         try {
-            getDataFolder().mkdirs();
+            saveDefaultConfig();
             FileConfiguration debug = ConfigManager.getConfig(this, "debug.yml");
             LoggingManager.getInstance().setLevel(debug.getInt("debug-level", 1000));
             LoggingManager.getInstance().setPrefix(getDescription().getPrefix());
             ConfigManager.getInstance().initialise(this);
+            if(!getConfig().getString("database.enabled").equalsIgnoreCase("true")) {
+                getLogger().info("You need to configure then enable the database for this plugin to work!");
+                pluginManager.disablePlugin(this);
+            }
+
+            if(!pluginManager.isPluginEnabled(this)) {return;}
+
             DependenciesManager.getInstance().initialise(this, getClassLoader());
             DatabaseManager.getInstance().initialise(this);
+
             if(!DataHandlingManager.getInstance().initialise(getClassLoader())) {
                 LoggingManager.getInstance().logDeveloperMessage("manf", DeveloperMessages.HANDLING_BROKEN);
                 getPluginLoader().disablePlugin(this);
             }
 
-            if(!getPluginManager().isPluginEnabled(this)) {return;}
+            if(!pluginManager.isPluginEnabled(this)) {return;}
 
-            getPluginManager().registerEvents(new PlayerListener(), this);
+            pluginManager.registerEvents(new PlayerListener(), this);
 
             InventoryLockingSystem.getInstance().initialise(this);
             manager = new CommandManager();
@@ -87,7 +95,7 @@ public final class InventorySQLPlugin extends JavaPlugin {
             getPluginLoader().disablePlugin(this);
         }
 
-        if(!getPluginManager().isPluginEnabled(this)) {return;}
+        if(!pluginManager.isPluginEnabled(this)) {return;}
 
         //May add just a check and let the user update manually?
         if (ConfigManager.getInstance().isAutoUpdateEnabled()) {

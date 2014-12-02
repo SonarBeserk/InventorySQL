@@ -58,7 +58,9 @@ public class AddonManager {
     }
     
     public void disable(JavaPlugin plugin) {
-        for(Addon addon:addons) {
+        if(addons == null) {return;}
+
+        for(Addon addon: addons) {
             LoggingManager.getInstance().log(LoggingManager.Level.ADDONS, "Disabling " + addon.getName() + " Version " + addon.getVersion());
             addon.onDisable(plugin);
         }

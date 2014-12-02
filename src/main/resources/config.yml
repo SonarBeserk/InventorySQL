@@ -1,5 +1,6 @@
 groupID: 'MyServer'
 database:
+  enabled: false
   url: 'jdbc:mysql://localhost:3306/mydb?user=root&password=asdf'
   handler: 'tk.manf.InventorySQL.database.handler.MySQLDatabaseHandler'
 data:

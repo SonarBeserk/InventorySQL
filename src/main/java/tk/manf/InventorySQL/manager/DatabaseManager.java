@@ -54,7 +54,6 @@ public final class DatabaseManager implements Listener {
     }
 
     public void initialise(JavaPlugin plugin) {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     public void reload(JavaPlugin plugin, ClassLoader cl) throws Exception {
