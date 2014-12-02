@@ -34,9 +34,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.manf.InventorySQL.InventorySQLPlugin;
 import tk.manf.InventorySQL.database.DatabaseHandler;
-import tk.manf.InventorySQL.database.handler.MySQLDatabaseHandler;
-import tk.manf.InventorySQL.event.PlayerLoadedEvent;
 import tk.manf.InventorySQL.event.PlayerSavedEvent;
 import tk.manf.InventorySQL.event.PrePlayerLoadedEvent;
 import tk.manf.InventorySQL.event.PrePlayerSavedEvent;
@@ -67,8 +66,11 @@ public final class DatabaseManager implements Listener {
     }
 
     public void savePlayer(Player player) {
+        PrePlayerSavedEvent event = new PrePlayerSavedEvent(player);
+        InventorySQLPlugin.getPluginManager().callEvent(event);
+
         //Allow Plugins to cancel saving
-        if (EventManager.getInstance().call(new PrePlayerSavedEvent(player)).isCancelled()) {
+        if (event.isCancelled()) {
             LoggingManager.getInstance().log(LoggingManager.Level.DEBUG, "Canceled Saving for: " + player.getUniqueId());
             return;
         }
@@ -82,14 +84,15 @@ public final class DatabaseManager implements Listener {
         }
 
         //Inform Listeners! Player has been saved
-        EventManager.getInstance().call(new PlayerSavedEvent(player));
+        InventorySQLPlugin.getPluginManager().callEvent(new PlayerSavedEvent(player));
     }
 
     public boolean loadPlayer(Player player) throws Exception {
-        if (EventManager.getInstance().call(new PrePlayerLoadedEvent(player)).isCancelled()) {
-            return false;
-        }
-        return EventManager.getInstance().call(new PlayerLoadedEvent(handler.loadPlayerInventory(player), player)).isSuccess();
+        PrePlayerLoadedEvent event = new PrePlayerLoadedEvent(player);
+
+        InventorySQLPlugin.getPluginManager().callEvent(event);
+
+        return event.isCancelled();
     }
 
     @EventHandler(priority = EventPriority.HIGH)

@@ -25,9 +25,11 @@
 
 package tk.manf.InventorySQL;
 
+import lombok.Getter;
 import net.gravitydevelopment.updater.Updater;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 import tk.manf.InventorySQL.api.InventorySQLAPI;
@@ -38,11 +40,16 @@ import tk.manf.InventorySQL.util.Language;
 import java.io.IOException;
 
 public final class InventorySQLPlugin extends JavaPlugin {
-    private static final int CURSE_ID = 35989; 
+    private static final int CURSE_ID = 35989;
+
+    @Getter
+    private static PluginManager pluginManager = null;
     private CommandManager manager;
 
     @Override
     public void onEnable() {
+        pluginManager = getPluginManager();
+
         try {
             getDataFolder().mkdirs();
             FileConfiguration debug = ConfigManager.getConfig(this, "debug.yml");
@@ -51,7 +58,6 @@ public final class InventorySQLPlugin extends JavaPlugin {
             ConfigManager.getInstance().initialise(this);
             DependenciesManager.getInstance().initialise(this, getClassLoader());
             DatabaseManager.getInstance().initialise(this);
-            UpdateEventManager.getInstance().initialise(this);
             if(!DataHandlingManager.getInstance().initialise(getClassLoader())) {
                 LoggingManager.getInstance().logDeveloperMessage("manf", DeveloperMessages.HANDLING_BROKEN);
                 getPluginLoader().disablePlugin(this);

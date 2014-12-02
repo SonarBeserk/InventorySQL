@@ -28,7 +28,6 @@ import com.google.common.io.CharStreams;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.ToString;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
