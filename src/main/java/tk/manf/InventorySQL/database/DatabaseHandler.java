@@ -32,21 +32,21 @@ public interface DatabaseHandler {
     /**
      * Called whenever Handler is initialised by Databasehandler
      * Used to createDatabases etc
-     * @param JavaPlugin instance
+     * @param plugin Plugin instance to init with
      */
     public void init(JavaPlugin plugin) throws Exception;
     
     /**
      * Saves the Inventory for the given Player
-     * @param player Player
+     * @param player The player to save the inventory of
      * @throws Exception if something went wrong
      */
     public void savePlayerInventory(Player player) throws Exception;
     
     /**
      * Loads the Inventory for the given Player
-     * @param player Player
-     * @return sucess
+     * @param player The player to load the inventory of
+     * @return If the player's inventory was loaded
      * @throws Exception if something went wrong
      */
     public boolean loadPlayerInventory(Player player) throws Exception;

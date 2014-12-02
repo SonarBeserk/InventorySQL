@@ -65,7 +65,6 @@ public final class DependenciesManager implements Listener {
                 checkDatabaseHandler();
                 return;
             case NONE:
-                // This plugins does not like us nor do we :(
                 return;
             default:
                 throw new IllegalArgumentException("Unknown DependencyType!");
