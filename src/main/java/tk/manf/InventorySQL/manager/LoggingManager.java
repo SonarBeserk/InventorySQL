@@ -25,8 +25,12 @@
 
 package tk.manf.InventorySQL.manager;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.bukkit.Bukkit;
+import tk.manf.InventorySQL.enums.DeveloperMessages;
 
 import java.util.logging.Logger;
 
@@ -78,12 +82,6 @@ public class LoggingManager {
          * Totally Debug Level
          */
         public static final int DEBUG = 999;
-        //public static final int NO = 899;
-        //public static final int BODY = 799;
-        //public static final int CARES = 699;
-        //public static final int THE = 599;
-        //public static final int DOCTOR = 499;
-        //public static final int IS = 399;
         /**
          * Stuff for Addons
          */
@@ -96,21 +94,6 @@ public class LoggingManager {
         public static final int ERROR = 0;
     }
 
-    @AllArgsConstructor
-    public static enum DeveloperMessages {
-        //#SUPPORT_DEVELOPERS
-        //Just remind people to be supportive.
-        METRICS_OFF("You turned metrics off :(. Metrics is a good way to support Developers! ( You should also consider donating :) )"),
-        METRICS_LOADED("Thanks for supporting us and using Metrics :)"),
-        DEPRECATED_CLASS("Sorry, but the loaded class is deprecated"),
-        HANDLING_BROKEN("You did not specify proper a proper Handler. Please specify a correct Classname for the missing Handler");
-        @Getter
-        private String message;
-    }
-    
-    static class Herobrine {
-        //Darkness
-    }
     @Getter
     private static final LoggingManager instance = new LoggingManager();
 }

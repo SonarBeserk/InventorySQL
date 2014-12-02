@@ -31,6 +31,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.manf.InventorySQL.enums.DeveloperMessages;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -94,7 +95,7 @@ public final class ConfigManager {
         dbURL = config.getString("database.url");
 
         if (!metricsEnabled) {
-            LoggingManager.getInstance().logDeveloperMessage("manf", LoggingManager.DeveloperMessages.METRICS_OFF);
+            LoggingManager.getInstance().logDeveloperMessage("manf", DeveloperMessages.METRICS_OFF);
         }
     }
     

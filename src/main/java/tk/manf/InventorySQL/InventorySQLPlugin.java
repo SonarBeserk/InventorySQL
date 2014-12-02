@@ -33,15 +33,15 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 import tk.manf.InventorySQL.api.InventorySQLAPI;
+import tk.manf.InventorySQL.enums.DeveloperMessages;
 import tk.manf.InventorySQL.listeners.PlayerListener;
 import tk.manf.InventorySQL.manager.*;
-import tk.manf.InventorySQL.manager.LoggingManager.DeveloperMessages;
 import tk.manf.InventorySQL.util.Language;
 
 import java.io.IOException;
 
 public final class InventorySQLPlugin extends JavaPlugin {
-    private static final int CURSE_ID = 35989;
+    private static final int CURSE_PROJECT_ID = 35989;
 
     @Getter
     private static PluginManager pluginManager = null;
@@ -88,7 +88,7 @@ public final class InventorySQLPlugin extends JavaPlugin {
 
         //May add just a check and let the user update manually?
         if (ConfigManager.getInstance().isAutoUpdateEnabled()) {
-            Updater updater = new Updater(this, CURSE_ID, this.getFile(), Updater.UpdateType.DEFAULT, false);
+            Updater updater = new Updater(this, CURSE_PROJECT_ID, this.getFile(), Updater.UpdateType.DEFAULT, false);
             switch (updater.getResult()) {
                 case SUCCESS:
                     LoggingManager.getInstance().log(999, "Updated to Version: " + updater.getLatestFileLink());

@@ -23,24 +23,20 @@
  * manf                   info@manf.tk
  */
 
-package tk.manf.InventorySQL.util;
+package tk.manf.InventorySQL.enums;
 
-import com.google.common.base.Preconditions;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import tk.manf.InventorySQL.enums.DeveloperMessages;
-import tk.manf.InventorySQL.manager.LoggingManager;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReflectionUtil {
-    public static <T> T getInstance(Class<T> type, ClassLoader loader, String target) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        Class<?> t = loader.loadClass(target);
-        Preconditions.checkArgument(t != null, "Target not found %s", target);
-        LoggingManager.getInstance().d("Loading " + t.getName());
-        if(t.getAnnotation(Deprecated.class) != null) {
-            LoggingManager.getInstance().logDeveloperMessage("manf", DeveloperMessages.DEPRECATED_CLASS);
-        }
-        return type.cast(t.newInstance());
-    }
+@AllArgsConstructor
+public enum DeveloperMessages {
+    //#SUPPORT_DEVELOPERS
+    //Just remind people to be supportive.
+    METRICS_OFF("You turned metrics off :(. Metrics is a good way to support Developers! ( You should also consider donating :) )"),
+    METRICS_LOADED("Thanks for supporting us and using Metrics :)"),
+    DEPRECATED_CLASS("Sorry, but the loaded class is deprecated"),
+    HANDLING_BROKEN("You did not specify proper a proper Handler. Please specify a correct Classname for the missing Handler");
 
+    @Getter
+    private String message;
 }
