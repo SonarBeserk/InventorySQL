@@ -42,7 +42,7 @@ public final class InvSQLCommand extends CommandManager.InternalCommand {
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         if (args.length == 0) {
-            //TODO:
+            sender.sendMessage("Subcommands: \n save - saves a player's inventory \n reload - reloads the plugin's files");
             return;
         }
         if (args[0].equalsIgnoreCase("save")) {
