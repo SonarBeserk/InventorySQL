@@ -33,6 +33,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 import tk.manf.InventorySQL.api.InventorySQLAPI;
+import tk.manf.InventorySQL.listeners.PlayerListener;
 import tk.manf.InventorySQL.manager.*;
 import tk.manf.InventorySQL.manager.LoggingManager.DeveloperMessages;
 import tk.manf.InventorySQL.util.Language;
@@ -63,6 +64,8 @@ public final class InventorySQLPlugin extends JavaPlugin {
                 getPluginLoader().disablePlugin(this);
                 return;
             }
+            getPluginManager().registerEvents(new PlayerListener(), this);
+
             InventoryLockingSystem.getInstance().initialise(this);
             manager = new CommandManager();
             manager.initialise(this, getClassLoader());

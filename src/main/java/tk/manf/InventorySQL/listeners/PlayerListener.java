@@ -25,10 +25,24 @@
 
 package tk.manf.InventorySQL.listeners;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import tk.manf.InventorySQL.manager.DatabaseManager;
 
-public class PlayerListener {
-    public void quit(PlayerQuitEvent ev) {
+public class PlayerListener implements Listener {
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    public void onPlayerLogin(final PlayerJoinEvent ev) {
+        DatabaseManager.getInstance().guidedLoad(ev);
     }
+
+    @EventHandler(ignoreCancelled = true)
+    public void quit(PlayerQuitEvent ev) {
+        DatabaseManager.getInstance().savePlayer(ev.getPlayer());
+    }
+
+
 }

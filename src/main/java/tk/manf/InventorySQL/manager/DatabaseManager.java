@@ -27,8 +27,6 @@ package tk.manf.InventorySQL.manager;
 
 import lombok.Getter;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
@@ -100,8 +98,11 @@ public final class DatabaseManager implements Listener {
         return playerLoadEvent.isLoaded();
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerLogin(final PlayerJoinEvent ev) {
+    /**
+     * Called when a player joins the server
+     * @param ev the join event of the player
+     */
+    public void guidedLoad(final PlayerJoinEvent ev) {
         Player p = ev.getPlayer();
         addPlayerInventoryCache(String.valueOf(p.getUniqueId()), p.getInventory());
         p.getInventory().clear();
