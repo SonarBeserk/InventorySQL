@@ -31,7 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.player.PlayerEvent;
 
-public abstract class PrePlayerEvent extends PlayerEvent implements InventorySQLEvent, Cancellable {
+public abstract class PrePlayerEvent extends PlayerEvent implements Cancellable {
     @Getter
     @Setter
     private boolean cancelled;
