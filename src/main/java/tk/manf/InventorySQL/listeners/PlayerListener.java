@@ -44,21 +44,41 @@ public class PlayerListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerPickup(final PlayerPickupItemEvent ev) {
+        if(InventorySQLPlugin.getSyncingTask().getEventsMap().containsKey(ev.getPlayer().getUniqueId())) {
+            ev.setCancelled(true);
+            return;
+        }
+
         InventoryLockingSystem.getInstance().check(ev);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDrop(final PlayerDropItemEvent ev) {
+        if(InventorySQLPlugin.getSyncingTask().getEventsMap().containsKey(ev.getPlayer().getUniqueId())) {
+            ev.setCancelled(true);
+            return;
+        }
+
         InventoryLockingSystem.getInstance().check(ev);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(final InventoryClickEvent ev) {
+        if(InventorySQLPlugin.getSyncingTask().getEventsMap().containsKey(ev.getWhoClicked().getUniqueId())) {
+            ev.setCancelled(true);
+            return;
+        }
+
         InventoryLockingSystem.getInstance().check(ev, ev.getWhoClicked());
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onInventoryOpen(final InventoryOpenEvent ev) {
+        if(InventorySQLPlugin.getSyncingTask().getEventsMap().containsKey(ev.getPlayer().getUniqueId())) {
+            ev.setCancelled(true);
+            return;
+        }
+
         InventoryLockingSystem.getInstance().check(ev, ev.getPlayer());
     }
 
