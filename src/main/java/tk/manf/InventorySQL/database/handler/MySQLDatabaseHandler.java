@@ -59,6 +59,7 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
     public void init(JavaPlugin plugin) throws Exception {
         q = new Queries(ConfigManager.getConfig(plugin, "dbhandler.yml"));
         Connection con = getConnection();
+
         @Cleanup
         Statement stmt = con.createStatement();
         String[] queries = q.replaceTables(CharStreams.toString(new InputStreamReader(plugin.getResource("mysql/CREATE.sql")))).split(";");
@@ -74,25 +75,29 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
     private void convertNames(JavaPlugin plugin) throws Exception {
         final Connection con = getConnection();
 
+        @Cleanup
         PreparedStatement stmt = con.prepareStatement(q.CHECK_FOR_OLD_STRUCTURE_QUERY);
         ResultSet rs = stmt.executeQuery();
         if(!rs.next()) {return;}
         stmt.close();
 
+        @Cleanup
         PreparedStatement aStmt = con.prepareStatement(q.ALTER_TABLE_ADD_QUERY);
         aStmt.execute();
         aStmt.close();
 
 
         ArrayList<String> namesToConvert = new ArrayList<String>();
+
+        @Cleanup
         PreparedStatement sStmt = con.prepareStatement(q.GET_PLAYER_NAMES_QUERY);
         ResultSet sRs = sStmt.executeQuery();
 
         while(sRs.next()) {
-            namesToConvert.add(sRs.getString("playername"));
+            if(sRs.getString("playername") != null) {
+                namesToConvert.add(sRs.getString("playername"));
+            }
         }
-
-        sStmt.close();
 
         new NameConversionTask(namesToConvert, con, q.PLAYER_DATABASE).runTaskAsynchronously(plugin);
     }
@@ -105,6 +110,7 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
         final String serverID = ConfigManager.getInstance().getServerID(player);
 
         //Normal Inventory
+        @Cleanup
         PreparedStatement stmt = packInventory(con, q.INSERT_INVENTORY_QUERY, playerID, serverID, 3, inv.getContents(), inv.getArmorContents());
         //Stats
         stmt.setDouble(5, player.getHealth());
@@ -153,6 +159,7 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
      */
     private int getPlayerID(String playerUUID, Connection con) throws SQLException {
         int id;
+        @Cleanup
         PreparedStatement stmt = con.prepareStatement(q.GET_PLAYER_ID_QUERY);
         stmt.setString(1, playerUUID);
         LoggingManager.getInstance().d(stmt.toString());
@@ -172,7 +179,6 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
                 id = -1;
             }
         }
-        stmt.close();
         return id;
     }
 

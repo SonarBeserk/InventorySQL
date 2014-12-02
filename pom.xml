@@ -86,10 +86,10 @@
                             <goal>shade</goal>
                         </goals>                        
                         <configuration>
-                            <minimizeJar>true</minimizeJar>    
+                            <minimizeJar>true</minimizeJar>
                             <artifactSet>
                                 <includes>
-                                    <include>net.gravitydevelopment.*:*</include>
+                                    <include>net.gravitydevelopment.updater:*</include>
                                     <include>org.mcstats.*:*</include>
                                 </includes>
                             </artifactSet>
