@@ -32,8 +32,8 @@ import org.bukkit.event.player.PlayerEvent;
 public class PlayerSavedEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
 
-    public PlayerSavedEvent(Player who) {
-        super(who);
+    public PlayerSavedEvent(Player player) {
+        super(player);
     }
 
     @Override

@@ -36,6 +36,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import tk.manf.InventorySQL.InventorySQLPlugin;
 import tk.manf.InventorySQL.database.DatabaseHandler;
+import tk.manf.InventorySQL.event.PlayerLoadedEvent;
 import tk.manf.InventorySQL.event.PlayerSavedEvent;
 import tk.manf.InventorySQL.event.PrePlayerLoadedEvent;
 import tk.manf.InventorySQL.event.PrePlayerSavedEvent;
@@ -92,7 +93,11 @@ public final class DatabaseManager implements Listener {
 
         InventorySQLPlugin.getPluginManager().callEvent(event);
 
-        return event.isCancelled();
+        if(event.isCancelled()) {return false;}
+
+        PlayerLoadedEvent playerLoadEvent = new PlayerLoadedEvent(handler.loadPlayerInventory(player), player);
+
+        return playerLoadEvent.isLoaded();
     }
 
     @EventHandler(priority = EventPriority.HIGH)

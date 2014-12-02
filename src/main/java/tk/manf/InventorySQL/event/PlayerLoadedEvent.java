@@ -32,12 +32,12 @@ import org.bukkit.event.player.PlayerEvent;
 
 public class PlayerLoadedEvent extends PlayerEvent {
     @Getter
-    private final boolean success;
+    private final boolean loaded;
     private static final HandlerList handlers = new HandlerList();
 
-    public PlayerLoadedEvent(boolean success, Player who) {
-        super(who);
-        this.success = success;
+    public PlayerLoadedEvent(boolean loaded, Player player) {
+        super(player);
+        this.loaded = loaded;
     }
 
     @Override

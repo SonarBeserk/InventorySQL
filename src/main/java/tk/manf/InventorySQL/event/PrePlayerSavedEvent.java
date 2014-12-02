@@ -31,8 +31,8 @@ import org.bukkit.event.HandlerList;
 public class PrePlayerSavedEvent extends PrePlayerEvent {
     private static final HandlerList handlers = new HandlerList();
 
-    public PrePlayerSavedEvent(Player who) {
-        super(who);
+    public PrePlayerSavedEvent(Player player) {
+        super(player);
     }
 
     @Override

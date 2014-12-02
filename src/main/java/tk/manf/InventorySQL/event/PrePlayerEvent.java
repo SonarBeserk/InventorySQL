@@ -36,7 +36,7 @@ public abstract class PrePlayerEvent extends PlayerEvent implements Cancellable 
     @Setter
     private boolean cancelled;
 
-    public PrePlayerEvent(Player who) {
-        super(who);
+    public PrePlayerEvent(Player player) {
+        super(player);
     }
 }

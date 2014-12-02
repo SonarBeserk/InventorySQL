@@ -28,13 +28,13 @@ package tk.manf.InventorySQL.event;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
-public class PrePlayerLoadedEvent extends PrePlayerEvent{    
+public class PrePlayerLoadedEvent extends PrePlayerEvent{
     private static final HandlerList handlers = new HandlerList();
 
-    public PrePlayerLoadedEvent(Player who) {
-        super(who);
+    public PrePlayerLoadedEvent(Player player) {
+        super(player);
     }
-    
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
