@@ -1,6 +1,4 @@
-update-events:
-  - quit
-serverID: 'MyServer'
+groupID: 'MyServer'
 database:
   url: 'jdbc:mysql://localhost:3306/mydb?user=root&password=asdf'
   handler: 'tk.manf.InventorySQL.database.handler.MySQLDatabaseHandler'

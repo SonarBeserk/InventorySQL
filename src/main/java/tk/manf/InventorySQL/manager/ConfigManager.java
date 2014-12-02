@@ -44,7 +44,7 @@ public final class ConfigManager {
     private List<String> updateEvents;
     @Getter
     private String dbURL, serializer, compressor, databaseHandler;
-    private String serverID;
+    private String groupID;
     @Getter
     private FileConfiguration language;
     @Getter
@@ -55,11 +55,9 @@ public final class ConfigManager {
     private ConfigManager() {
     }
 
-    public void initialise(JavaPlugin plugin) throws IOException, NoSuchAlgorithmException {
-        //maybe use testserialisation, just need to finally change something
+    public void initialise(JavaPlugin plugin) throws IOException {
         loadLanguage(plugin);
         loadConfig(plugin);
-        //dbURL = "jdbc:mysql://" + "localhost" + ":" + 3306 + "/" + "mydb" + "?" + "user=" + "root" + "&" + "password=" + "68836883";
     }
 
     public void loadLanguage(JavaPlugin plugin) throws IOException {
@@ -77,13 +75,13 @@ public final class ConfigManager {
     }
     
     //Return different ID for Player in case of multiworld support
-    public String getServerID(Player player) {
-        return serverID; // + " - " + player.getWorld().getName();
+    public String getGroupID(Player player) {
+        return groupID; // + " - " + player.getWorld().getName();
     }
     
     private void loadConfig(JavaPlugin plugin) throws IOException, NoSuchAlgorithmException {
         FileConfiguration config = getConfig(plugin, "config.yml");
-        serverID = md5(config.getString("serverID", ""));
+        groupID = md5(config.getString("groupID", ""));
         serializer = config.getString("data.serializer", "tk.manf.InventorySQL.datahandling.serializer.JSONSerializer");
         compressor = config.getString("data.compressor", "tk.manf.InventorySQL.datahandling.compressor.GZipCompressor");
         databaseHandler = config.getString("database.handler", "tk.manf.InventorySQL.database.handler.MySQLDatabaseHandler");

@@ -107,7 +107,7 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
         final PlayerInventory inv = player.getInventory();
         final Connection con = getConnection();
         final int playerID = getPlayerID(String.valueOf(player.getUniqueId()), con);
-        final String serverID = ConfigManager.getInstance().getServerID(player);
+        final String serverID = ConfigManager.getInstance().getGroupID(player);
 
         //Normal Inventory
         @Cleanup
@@ -126,7 +126,7 @@ public class MySQLDatabaseHandler implements DatabaseHandler {
         LoggingManager.getInstance().d("Getting Player Inventory");
         final Connection con = getConnection();
         final int playerID = getPlayerID(String.valueOf(player.getUniqueId()), con);
-        final String serverID = ConfigManager.getInstance().getServerID(player);
+        final String serverID = ConfigManager.getInstance().getGroupID(player);
         @Cleanup
         PreparedStatement invStmt = prepare(con, q.GET_PLAYER_INVENTORY_DATA_QUERY, playerID, serverID);
         ResultSet p = invStmt.executeQuery();
