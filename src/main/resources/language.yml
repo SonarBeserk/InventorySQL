@@ -5,5 +5,3 @@ inventory:
   saved: '&9Your Inventory has been saved!'
   synced: '&2Your Inventory has successfully been synchronised!'
 first-join: '&2Welcome on this Server!'
-kick:
-  reload: 'Reloading Server... Please try again soon!'

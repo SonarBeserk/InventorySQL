@@ -36,7 +36,6 @@ import tk.manf.InventorySQL.api.InventorySQLAPI;
 import tk.manf.InventorySQL.enums.DeveloperMessages;
 import tk.manf.InventorySQL.listeners.PlayerListener;
 import tk.manf.InventorySQL.manager.*;
-import tk.manf.InventorySQL.util.Language;
 
 import java.io.IOException;
 
@@ -117,11 +116,6 @@ public final class InventorySQLPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        //Kick Players before restart
-        for (Player p : getServer().getOnlinePlayers()) {
-            p.kickPlayer(LanguageManager.getInstance().getMessage(Language.KICKED_RELOAD));
-            DatabaseManager.getInstance().savePlayer(p);
-        }
         InventorySQLAPI.getAPI().disable(this);
         AddonManager.getInstance().disable(this);
     }

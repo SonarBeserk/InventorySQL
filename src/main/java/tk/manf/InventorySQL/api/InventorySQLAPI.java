@@ -64,7 +64,7 @@ public class InventorySQLAPI {
     }
     
     /**
-     * Switches given Player to given Server
+     * Switches given Player to a given Server on the current Bungeecord instance
      * Saving Inventory of Player and then move him to the given Server
      * @param target Target Player
      * @param server Servername

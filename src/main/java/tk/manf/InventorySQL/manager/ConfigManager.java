@@ -55,7 +55,7 @@ public final class ConfigManager {
     private ConfigManager() {
     }
 
-    public void initialise(JavaPlugin plugin) throws IOException {
+    public void initialise(JavaPlugin plugin) throws IOException, NoSuchAlgorithmException {
         loadLanguage(plugin);
         loadConfig(plugin);
     }
