@@ -87,6 +87,8 @@ public final class InventorySQLPlugin extends JavaPlugin {
             getPluginLoader().disablePlugin(this);
         }
 
+        if(!getPluginManager().isPluginEnabled(this)) {return;}
+
         //May add just a check and let the user update manually?
         if (ConfigManager.getInstance().isAutoUpdateEnabled()) {
             Updater updater = new Updater(this, CURSE_PROJECT_ID, this.getFile(), Updater.UpdateType.DEFAULT, false);
