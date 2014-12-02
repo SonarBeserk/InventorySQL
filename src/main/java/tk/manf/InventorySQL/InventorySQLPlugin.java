@@ -36,6 +36,7 @@ import tk.manf.InventorySQL.api.InventorySQLAPI;
 import tk.manf.InventorySQL.enums.DeveloperMessages;
 import tk.manf.InventorySQL.listeners.PlayerListener;
 import tk.manf.InventorySQL.manager.*;
+import tk.manf.InventorySQL.tasks.SyncingTask;
 
 import java.io.IOException;
 
@@ -43,11 +44,18 @@ public final class InventorySQLPlugin extends JavaPlugin {
     private static final int CURSE_PROJECT_ID = 35989;
 
     @Getter
+    private static InventorySQLPlugin instance = null;
+
+    @Getter
     private static PluginManager pluginManager = null;
-    private CommandManager manager;
+    private CommandManager manager = null;
+
+    @Getter
+    private static SyncingTask syncingTask = null;
 
     @Override
     public void onEnable() {
+        instance = this;
         pluginManager = getServer().getPluginManager();
 
         try {
@@ -124,6 +132,9 @@ public final class InventorySQLPlugin extends JavaPlugin {
             } catch (IOException e) {
             }
         }
+
+        syncingTask = new SyncingTask();
+        syncingTask.runTaskTimer(this, 0, 10);
     }
 
     @Override

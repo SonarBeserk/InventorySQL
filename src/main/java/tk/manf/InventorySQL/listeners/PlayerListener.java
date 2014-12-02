@@ -31,6 +31,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
+import tk.manf.InventorySQL.InventorySQLPlugin;
 import tk.manf.InventorySQL.manager.DatabaseManager;
 import tk.manf.InventorySQL.manager.InventoryLockingSystem;
 
@@ -38,7 +39,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPlayerLogin(final PlayerJoinEvent ev) {
-        DatabaseManager.getInstance().guidedLoad(ev);
+        InventorySQLPlugin.getSyncingTask().addPlayerToSync(ev.getPlayer().getUniqueId(), ev);
     }
 
     @EventHandler(ignoreCancelled = true)
