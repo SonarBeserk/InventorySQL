@@ -28,14 +28,8 @@ package tk.manf.InventorySQL.manager;
 import lombok.Getter;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -57,32 +51,7 @@ public class InventoryLockingSystem implements Listener {
     public void addLock(String player) {
         locked.add(player);
     }
-    
-    @EventHandler
-    public void onPlayerPickup(final PlayerPickupItemEvent ev) {
-        check(ev);
-    }
 
-    @EventHandler
-    public void onPlayerDrop(final PlayerDropItemEvent ev) {
-        check(ev);
-    }
-    
-    @EventHandler
-    public void onInventoryClick(final InventoryClickEvent ev) {
-        check(ev, ev.getWhoClicked());
-    }
-    
-    @EventHandler
-    public void onInventoryOpen(final InventoryOpenEvent ev) {
-        check(ev, ev.getPlayer());
-    }
-    
-    @EventHandler
-    public void onPlayerLeave(final PlayerQuitEvent ev) {
-        removeLock(String.valueOf(ev.getPlayer().getUniqueId()));
-    }
-    
     public boolean isLocked(String player) {
         synchronized (locked) {
             Iterator<String> i = locked.iterator();
@@ -99,11 +68,11 @@ public class InventoryLockingSystem implements Listener {
         locked.remove(player);
     }
     
-    private <T extends PlayerEvent & Cancellable> void  check(T ev) {
+    public <T extends PlayerEvent & Cancellable> void  check(T ev) {
        check(ev, ev.getPlayer());
     }
     
-    private void check(Cancellable ev, HumanEntity player) {
+    public void check(Cancellable ev, HumanEntity player) {
         ev.setCancelled(isLocked(String.valueOf(player.getUniqueId())));
     }
 

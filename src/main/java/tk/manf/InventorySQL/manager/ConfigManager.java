@@ -70,7 +70,7 @@ public final class ConfigManager {
         DatabaseManager.getInstance().reload(plugin, cl);
     }
 
-    public String getLangugagePattern(String id, String def) {
+    public String getLanguagePattern(String id, String def) {
         return language.getString(id, def);
     }
     

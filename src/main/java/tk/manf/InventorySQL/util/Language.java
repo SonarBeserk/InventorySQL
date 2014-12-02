@@ -40,7 +40,7 @@ public final class Language {
 
     private Language(String id, String defPattern) {
         this.id = id;
-        this.pattern = ChatColor.translateAlternateColorCodes('&', ConfigManager.getInstance().getLangugagePattern(id, defPattern));
+        this.pattern = ChatColor.translateAlternateColorCodes('&', ConfigManager.getInstance().getLanguagePattern(id, defPattern));
         register();
     }
 

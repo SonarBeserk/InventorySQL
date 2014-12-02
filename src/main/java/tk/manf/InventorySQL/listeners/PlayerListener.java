@@ -28,9 +28,14 @@ package tk.manf.InventorySQL.listeners;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import tk.manf.InventorySQL.manager.DatabaseManager;
+import tk.manf.InventorySQL.manager.InventoryLockingSystem;
 
 public class PlayerListener implements Listener {
 
@@ -39,10 +44,29 @@ public class PlayerListener implements Listener {
         DatabaseManager.getInstance().guidedLoad(ev);
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void quit(PlayerQuitEvent ev) {
-        DatabaseManager.getInstance().savePlayer(ev.getPlayer());
+    @EventHandler
+    public void onPlayerPickup(final PlayerPickupItemEvent ev) {
+        InventoryLockingSystem.getInstance().check(ev);
     }
 
+    @EventHandler
+    public void onPlayerDrop(final PlayerDropItemEvent ev) {
+        InventoryLockingSystem.getInstance().check(ev);
+    }
 
+    @EventHandler
+    public void onInventoryClick(final InventoryClickEvent ev) {
+        InventoryLockingSystem.getInstance().check(ev, ev.getWhoClicked());
+    }
+
+    @EventHandler
+    public void onInventoryOpen(final InventoryOpenEvent ev) {
+        InventoryLockingSystem.getInstance().check(ev, ev.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerLeave(final PlayerQuitEvent ev) {
+        DatabaseManager.getInstance().savePlayer(ev.getPlayer());
+        InventoryLockingSystem.getInstance().removeLock(String.valueOf(ev.getPlayer().getUniqueId()));
+    }
 }
